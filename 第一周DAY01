@@ -21,16 +21,16 @@ C++知识目录学习情况：
             ·逻辑运算符：（&&）、（||）、（!）；
             ·运算符的优先级：优先级规则过多，后续搭配练习题记忆；
 9.C++循环：·循环类型：while循环：while(){...}      do{...}while();
-                    for循环：for(init;condition;increment){...}       init初始化变量，只执行一次;condition为真执行主体，为假不执行；主体执行完后跳到increment，可以更新循环控制变量；
-                    基于范围的for循环:for(statemnet:range){...}       statement定义被用来做范围迭代的变量，就像被声明在一般for循环的变量一样，其作用域仅只于循环的范围;而在":"之后的range代表将被迭代的范围;
+                    for循环：for(init;condition;increment){...}       
+                    init初始化变量，只执行一次;condition为真执行主体，为假不执行；主体执行完后跳到increment，可以更新循环控制变量；
+                    基于范围的for循环:for(statemnet:range){...}       
+                    statement定义被用来做范围迭代的变量，就像被声明在一般for循环的变量一样，其作用域仅只于循环的范围;而在":"之后的range代表将被迭代的范围;
 10.C++判断：·判断语句：if语句：if(condition){...}
                      if else语句:if(condition){...}else{...}
                      if else if else语句：if(conditionA){...}else if(conditionB){...}else if(conditionC){...}else{...}
                      嵌套if语句：if(conditionA){if(conditionB){...}else{...}}else{...}
                      switch语句：switch(expression){case 1:...;break;case 2:...;break;case 3:...;break;default:...;}     
-                     switch 语句中的 expression 必须是一个整型或枚举类型，或者是一个 class 类型，其中 class 有一个单一的转换函数将其转换为整型或枚举类型。可以有任意数量的 case 语句。每个 case 后跟一个要比较的值和一个冒号。case 的 constant-expression 必须与 switch 中的变量具有相同的数据类型，且必须是一个常量或字面量。
-                     当被测试的变量等于 case 中的常量时，case 后跟的语句将被执行，直到遇到 break 语句为止。当遇到 break 语句时，switch 终止，控制流将跳转到 switch 语句后的下一行。不是每一个 case 都需要包含 break。如果 case 语句不包含 break，控制流将会 继续 后续的 case，直到遇到 break 为止。
-                     一个 switch 语句可以有一个可选的 default case，出现在 switch 的结尾。default case 可用于在上面所有 case 都不为真时执行一个任务。default case 中的 break 语句不是必需的。
+switch 语句中的 expression 必须是一个整型或枚举类型，或者是一个 class 类型，其中 class 有一个单一的转换函数将其转换为整型或枚举类型。可以有任意数量的 case 语句。每个 case 后跟一个要比较的值和一个冒号。case 的 constant-expression 必须与 switch 中的变量具有相同的数据类型，且必须是一个常量或字面量。当被测试的变量等于 case 中的常量时，case 后跟的语句将被执行，直到遇到 break 语句为止。当遇到 break 语句时，switch 终止，控制流将跳转到 switch 语句后的下一行。不是每一个 case 都需要包含 break。如果 case 语句不包含 break，控制流将会 继续 后续的 case，直到遇到 break 为止。一个 switch 语句可以有一个可选的 default case，出现在 switch 的结尾。default case 可用于在上面所有 case 都不为真时执行一个任务。default case 中的 break 语句不是必需的。
                      嵌套switch语句：switch(){case :...;switch(){case :...;break;}break;}
            ·运算符：条件运算符（:?）
 11.C++函数：定义函数、函数声明、调用函数；
@@ -40,8 +40,8 @@ C++知识目录学习情况：
 15.C++基本的输入输出：I/O库头文件（<iostream>、<iomanip>、<fstream>）、标准输出流（cout）、标准输入流（cin）、标准错误流（cerr）、标准日志流（clog）
 16.C++结构体:定义结构、访问结构成员（使用成员访问运算符（.））、结构作为函数参数、typedef关键字、结构体与类的区别；
 17.C++数据结构：·数组（Array）：固定大小，一旦声明，大小不能改变。直接访问元素，时间复杂度为 O(1)。适合处理大小已知、元素类型相同的集合。
-               ·结构体（Struct）：结构体允许将不同类型的数据组合在一起，形成一种自定义的数据类型。可以包含不同类型的成员变量。提供了对数据的基本封装，但功能有限。
-               ·类（Class）：与 struct 类似，但功能更强大，支持继承、封装、多态等特性。可以包含成员变量、成员函数、构造函数、析构函数。支持面向对象特性，如封装、继承、多态。
+               ·结构体（Struct）：允许将不同类型的数据组合在一起，形成一种自定义的数据类型。可以包含不同类型的成员变量。提供了对数据的基本封装，但功能有限。
+               ·类（Class）：与 struct 类似，但功能更强大。可以包含成员变量、成员函数、构造函数、析构函数。支持面向对象特性，如封装、继承、多态。
                ·链表（Linked List）：链表是一种动态数据结构，由一系列节点组成，每个节点包含数据和指向下一个节点的指针。动态调整大小，不需要提前定义容量。插入和删除操作效率高，时间复杂度为 O(1)（在链表头部或尾部操作）。线性查找，时间复杂度为 O(n)。
                ·栈（Stack）：栈是一种后进先出（LIFO, Last In First Out）的数据结构，常用于递归、深度优先搜索等场景。只允许在栈顶进行插入和删除操作。时间复杂度为 O(1)。
                ·队列（Queue）：队列是一种先进先出（FIFO, First In First Out）的数据结构，常用于广度优先搜索、任务调度等场景。插入操作在队尾进行，删除操作在队头进行。时间复杂度为 O(1)。
