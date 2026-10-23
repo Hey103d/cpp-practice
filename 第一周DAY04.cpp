@@ -1,4 +1,4 @@
-第一周DAY04
+第一周DAY04（5题）
 主要任务：分支结构（if/else if/switch）
 预计练习：8 道题：成绩分级、三角形判断、菜单选择器
 
@@ -10,4 +10,39 @@
    还可以用sort数组排序，比如cin>>a>>b>>c;int s[3]={a,b,c};sort(s,s+3);a=s[0];b=s[1];c=s[2];调用sort数组需要两个参数，起点位置和终点位置。s是数组名，在表达式里自动指向s[0]，s + 3 是“往前走 3 个位置”，但包含区间是左闭右开[s,s+3)；sort()函数也包含在有文件<algorithm>中，调用时需要添加头文件；
    if-else函数的用法：if(){...}else if(){...}else{...}必须对比的是同一个东西，比如if(a>b){...}else if(a==b){...}else{...}，如果出现if(a>b){...}else if((a*a)>c){...}else{...}则else if分支不会进行下去，因为他们对比的不是同一类型，else和else if必须属于同一分支，否则另开一个if分支，如if(a>b){...}if((a*a)>c){...}else{...}。
 
-2.
+2.洛谷U158342 成绩等级判定https://www.luogu.com.cn/problem/U158342#ide
+解题思路：if-else if 函数解答即可
+
+3.洛谷P5714 肥胖问题https://www.luogu.com.cn/problem/P5714#ide
+错因：又是输出单词漏字母问题，还是需要细心。
+注：cout默认输出6位有效数字，且省掉后缀0。
+
+4.洛谷P5716 月份天数https://www.luogu.com.cn/problem/P5716#ide
+解题思路：先进行闰年判断，然后用switch嵌套进行输出。
+注：每个case末端如果没有break就不会停止，会继续往下输出，包括嵌套switch函数后也需要加break才会中断，例如：
+    switch(m){
+        case 1:
+            cout<<"31";
+            break;
+        case 2:
+            switch(a){
+                case 1:
+                    cout<<"29";
+                    break;
+                case 2:
+                    cout<<"28";
+                    break;
+            }
+            break;     //如果这里不加break会继续输出case 3的内容
+        case 3:
+            cout<<"31";
+            break;
+   }
+
+5.洛谷P5715 三位数排序https://www.luogu.com.cn/problem/P5715#ide
+解题思路：与第一题先给输入的值排序一样，用swap()函数最快，但要注意添加头文件<algorithm>
+         也可以用if函数嵌套，但是代码太长容易出错。
+
+
+
+
