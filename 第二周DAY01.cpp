@@ -32,3 +32,8 @@
 注：for()函数中初始化的变量都只在for函数中存在。例如在for函数外声明并定义了一个变量int result=9;之后再在for函数中初始化for(int result=1,j=0;;){此时的result是一个新的变量，只存在于for函数中}，如果for循环结束之后，输出result的结果是9。
    用for循环遍历求阶乘属于迭代，但是递归法是一步一步函数拆解嵌套，比如9!=f(9)=9*f(8)、f(8)=8*f(7)、f(7)=7*f(6)...f(2)=2*f(1)、f(1)=1。
    "1ULL"后面的"ULL"是后缀，表示这个1的类型是unsigned long long。
+
+7.洛谷P1428 小鱼比可爱https://www.luogu.com.cn/problem/P1428#ide
+注：输入数组时，不能直接用cin>>arr;这样的话只会读取到第一个数字，后面的数字都读取不到；可以用for循环输入，例如for(int i=0;i<n;i++){cin>>arr[i];}。
+    因为cin>>对char*和string有专门的重载，可以一次读入一整段内容；对int*没有这样的重载，只能一次读入一个元素。
+    但如果cin>>str;的话，str中存在空格会导致中断，例如str="Hello World"，那么cin>>str;就只会读取到"Hello"，后面的"World"由于被空格中断无法读取。如果想把整个字符串内容包括空格都读取，可以用getline(cin,str)，但要注意在cin>>n之后紧接着使用getline，会读到空字符串，必须先处理掉这个换行：cin.ignore();（或 cin.get() 吃掉一个字符）。
