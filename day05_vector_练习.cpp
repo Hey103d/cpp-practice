@@ -1,42 +1,42 @@
-// day05_vector_ç»ƒä¹ .cpp
-// ä»Šå¤©ä¸‹åˆçš„ä¸»çº¿ï¼šç”¨ std::vector æ›¿æ‰ä½ è‡ªå·±ç»´æŠ¤çš„æ•°ç»„ + count
+// day05_vector_Á·Ï°.cpp
+// ½ñÌìÏÂÎçµÄÖ÷Ïß£ºÓÃ std::vector ÌæµôÄã×Ô¼ºÎ¬»¤µÄÊı×é + count
 //
-// ä¸ºä»€ä¹ˆè¿™ä¸€æ­¥èƒ½å¿«ï¼šæ˜¨å¤©ä½ å†™çš„ DetResultList é‡Œï¼Œ
-// è‡ªå·±ç®¡ countã€è‡ªå·±åˆ¤ MAX_OBJã€è‡ªå·±ç®—è¶Šç•Œ â€”â€” è¿™ä¸‰ä»¶äº‹ vector å…¨æ›¿ä½ åšäº†ã€‚
-// ä½ ç°åœ¨è¦åšçš„ä¸æ˜¯"å­¦æ–°ä¸œè¥¿"ï¼Œæ˜¯"æŠŠæ‰‹å†™çš„ä»£ç æ¢æˆæ ‡å‡†åº“çš„"ã€‚
+// ÎªÊ²Ã´ÕâÒ»²½ÄÜ¿ì£º×òÌìÄãĞ´µÄ DetResultList Àï£¬
+// ×Ô¼º¹Ü count¡¢×Ô¼ºÅĞ MAX_OBJ¡¢×Ô¼ºËãÔ½½ç ¡ª¡ª ÕâÈı¼şÊÂ vector È«ÌæÄã×öÁË¡£
+// ÄãÏÖÔÚÒª×öµÄ²»ÊÇ"Ñ§ĞÂ¶«Î÷"£¬ÊÇ"°ÑÊÖĞ´µÄ´úÂë»»³É±ê×¼¿âµÄ"¡£
 //
-// ç¼–è¯‘ï¼šg++ -std=c++17 -Wall -Wextra -Wshadow -O2 day05_vector_ç»ƒä¹ .cpp -o day05.exe
-// è¦æ±‚ï¼š29 ä¸ªæ–­è¨€å…¨è¿‡ï¼Œå¹¶ä¸”ã€é›¶è­¦å‘Šã€‘â€”â€” ç‰¹æ„ç•™äº†ä¸€ä¸ª size_t é™·é˜±ç­‰ç€ä½ 
+// ±àÒë£ºg++ -std=c++17 -Wall -Wextra -Wshadow -O2 day05_vector_Á·Ï°.cpp -o day05.exe
+// ÒªÇó£º29 ¸ö¶ÏÑÔÈ«¹ı£¬²¢ÇÒ¡¾Áã¾¯¸æ¡¿¡ª¡ª ÌØÒâÁôÁËÒ»¸ö size_t ÏİÚåµÈ×ÅÄã
 //
 // ===========================================================================
-// æ¦‚å¿µé€Ÿè§ˆï¼šè£¸æ•°ç»„ vs vector
+// ¸ÅÄîËÙÀÀ£ºÂãÊı×é vs vector
 // ===========================================================================
-//                         ä½ æ˜¨å¤©çš„å†™æ³•                      vector
-//  è£…ä¸œè¥¿                 list->results[list->count] = r     v.push_back(r)
-//  æœ‰å‡ ä¸ª                 list->count                       v.size()
-//  èƒ½ä¸èƒ½å†åŠ              count < MAX_OBJ ?                 æ°¸è¿œèƒ½ï¼Œè‡ªåŠ¨æ‰©å®¹
-//  æ¸…ç©º                   memset / count = 0                v.clear()
-//  ä¼ å‚ç»™åˆ«äºº             æŒ‡é’ˆ + é¢å¤–ä¼  n                    å¼•ç”¨ï¼Œé•¿åº¦è‡ªå¸¦
-//  éå†                   ä¸‹æ ‡ i ä» 0 åˆ° count-1            for (const auto& r : v)
+//                         Äã×òÌìµÄĞ´·¨                      vector
+//  ×°¶«Î÷                 list->results[list->count] = r     v.push_back(r)
+//  ÓĞ¼¸¸ö                 list->count                       v.size()
+//  ÄÜ²»ÄÜÔÙ¼Ó             count < MAX_OBJ ?                 ÓÀÔ¶ÄÜ£¬×Ô¶¯À©Èİ
+//  Çå¿Õ                   memset / count = 0                v.clear()
+//  ´«²Î¸ø±ğÈË             Ö¸Õë + ¶îÍâ´« n                    ÒıÓÃ£¬³¤¶È×Ô´ø
+//  ±éÀú                   ÏÂ±ê i ´Ó 0 µ½ count-1            for (const auto& r : v)
 //
-// ã€ä¸‰ä¸ªå¿…é¡»è®°ä½çš„ç‚¹ã€‘
+// ¡¾Èı¸ö±ØĞë¼Ç×¡µÄµã¡¿
 //
-// â‘  v.size() è¿”å›çš„ç±»å‹æ˜¯ size_tï¼ˆæ— ç¬¦å·æ•´æ•°ï¼ï¼‰ï¼Œä¸æ˜¯ intã€‚
-//    å†™ for (int i = 0; i < v.size(); ++i) ä¼šè§¦å‘ -Wsign-compare è­¦å‘Šã€‚
-//    ä¸¤ç§æ­£ç¡®å†™æ³•ï¼š
+// ¢Ù v.size() ·µ»ØµÄÀàĞÍÊÇ size_t£¨ÎŞ·ûºÅÕûÊı£¡£©£¬²»ÊÇ int¡£
+//    Ğ´ for (int i = 0; i < v.size(); ++i) »á´¥·¢ -Wsign-compare ¾¯¸æ¡£
+//    Á½ÖÖÕıÈ·Ğ´·¨£º
 //      for (std::size_t i = 0; i < v.size(); ++i)
-//      for (const DetResult& r : v)              â† æ›´æ¨è
+//      for (const DetResult& r : v)              ¡û ¸üÍÆ¼ö
 //
-// â‘¡ vector ä¼ å‚ï¼šè¦æ”¹åŸä»¶å°±ç”¨ std::vector<DetResult>&ï¼ˆå¼•ç”¨ï¼‰ï¼Œ
-//    åªè¯»å°±ç”¨ const std::vector<DetResult>&ã€‚
-//    ã€å’Œæ˜¨å¤©å¯¹æ¯”ã€‘æ˜¨å¤©ä½ å†™ DetResultList* listï¼Œä»Šå¤©å†™ vector& â€”â€” å› ä¸ºå¼•ç”¨æ›´å®‰å…¨ï¼Œ
-//    è€Œä¸” vector è‡ªå·±çŸ¥é“é•¿åº¦ï¼Œä¸éœ€è¦å†ä¼  nã€‚
+// ¢Ú vector ´«²Î£ºÒª¸ÄÔ­¼ş¾ÍÓÃ std::vector<DetResult>&£¨ÒıÓÃ£©£¬
+//    Ö»¶Á¾ÍÓÃ const std::vector<DetResult>&¡£
+//    ¡¾ºÍ×òÌì¶Ô±È¡¿×òÌìÄãĞ´ DetResultList* list£¬½ñÌìĞ´ vector& ¡ª¡ª ÒòÎªÒıÓÃ¸ü°²È«£¬
+//    ¶øÇÒ vector ×Ô¼ºÖªµÀ³¤¶È£¬²»ĞèÒªÔÙ´« n¡£
 //
-// â‘¢ æ•°ç»„é€€åŒ–æˆæŒ‡é’ˆæ—¶ sizeof ä¼šå˜æˆ 8ï¼ˆä½ è¸©è¿‡ï¼‰ï¼›
-//    vector ä¸ä¼šæœ‰è¿™ä¸ªé—®é¢˜ï¼Œv.size() æ°¸è¿œæ˜¯çœŸå®ä¸ªæ•°ã€‚
+// ¢Û Êı×éÍË»¯³ÉÖ¸ÕëÊ± sizeof »á±ä³É 8£¨Äã²È¹ı£©£»
+//    vector ²»»áÓĞÕâ¸öÎÊÌâ£¬v.size() ÓÀÔ¶ÊÇÕæÊµ¸öÊı¡£
 //
 // ===========================================================================
-// 5 é¢˜å¼€å§‹
+// 5 Ìâ¿ªÊ¼
 // ===========================================================================
 
 #include <iostream>
@@ -49,10 +49,10 @@ struct DetResult {
     int   cls_id;                    // 0=person  2=car
     float prop;
     int   left, top, right, bottom;
-    float depth;                     // ç±³ï¼›-1 è¡¨ç¤ºè¿˜æ²¡æµ‹è·
+    float depth;                     // Ã×£»-1 ±íÊ¾»¹Ã»²â¾à
 };
 
-// é€ ä¸€ä¸ªæ£€æµ‹ç»“æœçš„å°å·¥å…·ï¼ˆå·²ç»ç»™ä½ å†™å¥½äº†ï¼Œæµ‹è¯•ä¹Ÿåœ¨ç”¨ï¼‰
+// ÔìÒ»¸ö¼ì²â½á¹ûµÄĞ¡¹¤¾ß£¨ÒÑ¾­¸øÄãĞ´ºÃÁË£¬²âÊÔÒ²ÔÚÓÃ£©
 DetResult mkResult(int cls, float prop, int l, int t, int r, int b, float dep) {
     DetResult d{};
     d.cls_id = cls; d.prop = prop;
@@ -62,65 +62,94 @@ DetResult mkResult(int cls, float prop, int l, int t, int r, int b, float dep) {
 }
 
 // ---------------------------------------------------------------------------
-// é¢˜ 1ï¼šæ„é€ ä¸€å¸§çš„æ£€æµ‹ç»“æœ
-// è¦æ±‚ï¼šè¿”å›ä¸€ä¸ª vectorï¼Œé‡Œé¢ä¾æ¬¡æ”¾è¿™ 3 ä¸ªç›®æ ‡ï¼ˆé¡ºåºä¸èƒ½é”™ï¼‰ï¼š
-//       â‘  è¡Œäºº 0.9  æ¡†(100,200,180,340) æ·±åº¦ 3.5
-//       â‘¡ æ±½è½¦ 0.8  æ¡†(400,210,470,330) æ·±åº¦ 8.0
-//       â‘¢ è¡Œäºº 0.7  æ¡†(50,300,120,400)  æ·±åº¦ 1.2
-// ã€æç¤ºã€‘std::vector<DetResult> v; ç„¶å v.push_back(mkResult(...)); ä¸‰æ¬¡ï¼Œreturn v;
+// Ìâ 1£º¹¹ÔìÒ»Ö¡µÄ¼ì²â½á¹û
+// ÒªÇó£º·µ»ØÒ»¸ö vector£¬ÀïÃæÒÀ´Î·ÅÕâ 3 ¸öÄ¿±ê£¨Ë³Ğò²»ÄÜ´í£©£º
+//       ¢Ù ĞĞÈË 0.9  ¿ò(100,200,180,340) Éî¶È 3.5
+//       ¢Ú Æû³µ 0.8  ¿ò(400,210,470,330) Éî¶È 8.0
+//       ¢Û ĞĞÈË 0.7  ¿ò(50,300,120,400)  Éî¶È 1.2
+// ¡¾ÌáÊ¾¡¿std::vector<DetResult> v; È»ºó v.push_back(mkResult(...)); Èı´Î£¬return v;
 // ---------------------------------------------------------------------------
 std::vector<DetResult> buildFrame() {
     // TODO
-    return std::vector<DetResult>();
+    std::vector<DetResult> v{mkResult(0,0.9f,100,200,180,340,3.5f),
+                             mkResult(2,0.8f,400,210,470,330,8.0f),
+                             mkResult(0,0.7f,50,300,120,400,1.2f)};
+    return v;
 }
 
 // ---------------------------------------------------------------------------
-// é¢˜ 2ï¼šæ•°æŸä¸ªç±»åˆ«æœ‰å‡ ä¸ª
-// è¦æ±‚ï¼šå’Œæ˜¨å¤©åŒä¸€é“é¢˜ï¼Œä½†æ”¹ç”¨ vector
-// ã€æç¤ºã€‘èŒƒå›´ forï¼šfor (const DetResult& r : v) { if (r.cls_id == cls_id) ... }
-//         æ³¨æ„è¿™ä¸ªå‚æ•°æ˜¯ const å¼•ç”¨ï¼Œè¯´æ˜å‡½æ•°åªè¯»ä¸å†™
+// Ìâ 2£ºÊıÄ³¸öÀà±ğÓĞ¼¸¸ö
+// ÒªÇó£ººÍ×òÌìÍ¬Ò»µÀÌâ£¬µ«¸ÄÓÃ vector
+// ¡¾ÌáÊ¾¡¿·¶Î§ for£ºfor (const DetResult& r : v) { if (r.cls_id == cls_id) ... }
+//         ×¢ÒâÕâ¸ö²ÎÊıÊÇ const ÒıÓÃ£¬ËµÃ÷º¯ÊıÖ»¶Á²»Ğ´
 // ---------------------------------------------------------------------------
 int countByClass(const std::vector<DetResult>& v, int cls_id) {
     // TODO
-    return 0;
+    int cn=0;
+    for(const DetResult& r:v){
+        if(r.cls_id==cls_id){
+            cn++;
+        }
+    }
+    return cn;
 }
 
 // ---------------------------------------------------------------------------
-// é¢˜ 3ï¼šæ‰¾æœ€è¿‘çš„ç›®æ ‡ä¸‹æ ‡ï¼ˆdepth æœ€å°ï¼Œè·³è¿‡ depth < 0ï¼‰
-// è¦æ±‚ï¼šç©º vector æˆ–å…¨éƒ¨æœªæµ‹è· â†’ è¿”å› -1
-// ã€æç¤ºã€‘å’Œæ˜¨å¤©å®Œå…¨ä¸€æ ·ï¼Œåªæ˜¯éå†æ–¹å¼æ¢æˆèŒƒå›´ forï¼›
-//         ä½†èŒƒå›´ for æ‹¿ä¸åˆ°ä¸‹æ ‡ â€”â€” æ‰€ä»¥è¿™é¢˜ä½ è¿˜æ˜¯å¾—ç”¨ä¸‹æ ‡éå†ï¼Œ
-//         ä¸‹æ ‡ç±»å‹ç”¨ std::size_tï¼ˆè§é€Ÿè§ˆç¬¬â‘ ç‚¹ï¼‰ï¼Œå¦åˆ™ä¼šæœ‰è­¦å‘Š
+// Ìâ 3£ºÕÒ×î½üµÄÄ¿±êÏÂ±ê£¨depth ×îĞ¡£¬Ìø¹ı depth < 0£©
+// ÒªÇó£º¿Õ vector »òÈ«²¿Î´²â¾à ¡ú ·µ»Ø -1
+// ¡¾ÌáÊ¾¡¿ºÍ×òÌìÍêÈ«Ò»Ñù£¬Ö»ÊÇ±éÀú·½Ê½»»³É·¶Î§ for£»
+//         µ«·¶Î§ for ÄÃ²»µ½ÏÂ±ê ¡ª¡ª ËùÒÔÕâÌâÄã»¹ÊÇµÃÓÃÏÂ±ê±éÀú£¬
+//         ÏÂ±êÀàĞÍÓÃ std::size_t£¨¼ûËÙÀÀµÚ¢Ùµã£©£¬·ñÔò»áÓĞ¾¯¸æ
 // ---------------------------------------------------------------------------
 int findNearestIndex(const std::vector<DetResult>& v) {
     // TODO
-    return -1;
+    int best=-1;
+    for(size_t i=0;i<v.size();i++){
+        if(v[i].depth<0)continue;
+        if(best==-1||v[i].depth<v[best].depth){
+            best=i;
+        }
+    }
+    return best;
 }
 
 // ---------------------------------------------------------------------------
-// é¢˜ 4ï¼šæŠŠæ¡†è£è¿›ç”»é¢ï¼ˆ0 <= left < right <= wï¼Œ0 <= top < bottom <= hï¼‰
-// è¦æ±‚ï¼šåŸåœ°ä¿®æ”¹ï¼Œæ‰€ä»¥å‚æ•°æ˜¯ã€é const å¼•ç”¨ã€‘â€”â€”è¿™æ˜¯å®ƒå’Œæ˜¨å¤©æŒ‡é’ˆå†™æ³•çš„åŒºåˆ«
-// ã€æç¤ºã€‘for (DetResult& r : v)  â€”â€” æ³¨æ„è¿™é‡Œæ²¡æœ‰ constï¼Œæ˜¯å¼•ç”¨ä¸æ˜¯æ‹·è´
+// Ìâ 4£º°Ñ¿ò²Ã½ø»­Ãæ£¨0 <= left < right <= w£¬0 <= top < bottom <= h£©
+// ÒªÇó£ºÔ­µØĞŞ¸Ä£¬ËùÒÔ²ÎÊıÊÇ¡¾·Ç const ÒıÓÃ¡¿¡ª¡ªÕâÊÇËüºÍ×òÌìÖ¸ÕëĞ´·¨µÄÇø±ğ
+// ¡¾ÌáÊ¾¡¿for (DetResult& r : v)  ¡ª¡ª ×¢ÒâÕâÀïÃ»ÓĞ const£¬ÊÇÒıÓÃ²»ÊÇ¿½±´
 // ---------------------------------------------------------------------------
 void clampToImage(std::vector<DetResult>& v, int w, int h) {
     // TODO
+    for(DetResult &r:v){
+        r.left=std::clamp(r.left,0,w);
+        r.right=std::clamp(r.right,0,w);
+        r.top=std::clamp(r.top,0,h);
+        r.bottom=std::clamp(r.bottom,0,h);
+    }
 }
 
 // ---------------------------------------------------------------------------
-// é¢˜ 5ï¼šåˆ æ‰æ‰€æœ‰"è¿˜æ²¡æµ‹è·"çš„ç›®æ ‡ï¼ˆdepth < 0ï¼‰ï¼Œè¿”å›åˆ æ‰äº†å‡ ä¸ª
-// è¦æ±‚ï¼šåŸåœ°ä» v ä¸­ç§»é™¤ï¼Œv çš„é•¿åº¦è¦çœŸçš„å˜å°
-// ã€æç¤ºã€‘æ ‡å‡†åšæ³•å« erase-remove æƒ¯ç”¨æ³•ï¼Œä¸¤è¡Œï¼š
-//           v.erase(std::remove_if(v.begin(), v.end(), åˆ¤æ–­å‡½æ•°), v.end());
-//         ä½†å®ƒå¯¹ä½ ç°åœ¨æœ‰ç‚¹ç»•ï¼Œæ‰€ä»¥ã€å…è®¸ä½ è‡ªå·±æ‰‹å†™ã€‘ï¼š
-//         ç”¨ä¸€ä¸ªæ–°çš„ vector è£…ä¿ç•™çš„ï¼Œæœ€å v = æ–°vector; ä¹Ÿç®—å¯¹
+// Ìâ 5£ºÉ¾µôËùÓĞ"»¹Ã»²â¾à"µÄÄ¿±ê£¨depth < 0£©£¬·µ»ØÉ¾µôÁË¼¸¸ö
+// ÒªÇó£ºÔ­µØ´Ó v ÖĞÒÆ³ı£¬v µÄ³¤¶ÈÒªÕæµÄ±äĞ¡
+// ¡¾ÌáÊ¾¡¿±ê×¼×ö·¨½Ğ erase-remove ¹ßÓÃ·¨£¬Á½ĞĞ£º
+//           v.erase(std::remove_if(v.begin(), v.end(), ÅĞ¶Ïº¯Êı), v.end());
+//         µ«Ëü¶ÔÄãÏÖÔÚÓĞµãÈÆ£¬ËùÒÔ¡¾ÔÊĞíÄã×Ô¼ºÊÖĞ´¡¿£º
+//         ÓÃÒ»¸öĞÂµÄ vector ×°±£ÁôµÄ£¬×îºó v = ĞÂvector; Ò²Ëã¶Ô
 // ---------------------------------------------------------------------------
+bool isNeg(const DetResult &x){
+        return x.depth<0;
+    }
+
 int removeUnmeasured(std::vector<DetResult>& v) {
     // TODO
-    return 0;
+    std::vector<DetResult>::iterator newend=std::remove_if(v.begin(),v.end(),isNeg);
+    int count=v.end()-newend;
+    v.erase(newend,v.end());
+    return count;
 }
 
 // ===========================================================================
-// ä»¥ä¸‹æ˜¯æµ‹è¯•ï¼Œä¸è¦ä¿®æ”¹
+// ÒÔÏÂÊÇ²âÊÔ£¬²»ÒªĞŞ¸Ä
 // ===========================================================================
 static int g_pass = 0, g_fail = 0;
 
@@ -132,55 +161,55 @@ void check(bool cond, const std::string& name) {
 int main() {
     std::cout << std::unitbuf;
 
-    // ---- é¢˜ 1 ----
-    std::cout << "\n[é¢˜ 1] buildFrame\n";
+    // ---- Ìâ 1 ----
+    std::cout << "\n[Ìâ 1] buildFrame\n";
     {
         std::vector<DetResult> v = buildFrame();
-        // æ³¨æ„ä¸‹é¢æ¯æ¡éƒ½å…ˆ v.size() == 3 &&ï¼Œé çŸ­è·¯ä¿æŠ¤ â€”â€”
-        // å¦åˆ™ç©º vector å»è®¿é—® v[0] ä¼šè¶Šç•Œå´©æ‰ï¼Œä½ å°±çœ‹ä¸åˆ°åé¢çš„æµ‹è¯•äº†ã€‚
-        // è¿™å’Œæ˜¨å¤© findNearestIndex é‡Œ best == -1 || æ˜¯åŒä¸€ä¸ªæœºåˆ¶ã€‚
-        check(v.size() == 3,                                              "ä¸€å…± 3 ä¸ªç›®æ ‡");
-        check(v.size() == 3 && v[0].cls_id == 0,                          "ç¬¬ 1 ä¸ªæ˜¯è¡Œäºº");
-        check(v.size() == 3 && v[0].left == 100,                          "ç¬¬ 1 ä¸ªçš„ left æ˜¯ 100");
-        check(v.size() == 3 && std::fabs(v[1].depth - 8.0f) < 1e-6f,      "ç¬¬ 2 ä¸ªæ·±åº¦æ˜¯ 8.0");
-        check(v.size() == 3 && v[2].right == 120,                         "ç¬¬ 3 ä¸ªçš„ right æ˜¯ 120");
-        check(v.size() == 3 && std::fabs(v[2].depth - 1.2f) < 1e-6f,      "ç¬¬ 3 ä¸ªæ·±åº¦æ˜¯ 1.2");
+        // ×¢ÒâÏÂÃæÃ¿Ìõ¶¼ÏÈ v.size() == 3 &&£¬¿¿¶ÌÂ·±£»¤ ¡ª¡ª
+        // ·ñÔò¿Õ vector È¥·ÃÎÊ v[0] »áÔ½½ç±Àµô£¬Äã¾Í¿´²»µ½ºóÃæµÄ²âÊÔÁË¡£
+        // ÕâºÍ×òÌì findNearestIndex Àï best == -1 || ÊÇÍ¬Ò»¸ö»úÖÆ¡£
+        check(v.size() == 3,                                              "Ò»¹² 3 ¸öÄ¿±ê");
+        check(v.size() == 3 && v[0].cls_id == 0,                          "µÚ 1 ¸öÊÇĞĞÈË");
+        check(v.size() == 3 && v[0].left == 100,                          "µÚ 1 ¸öµÄ left ÊÇ 100");
+        check(v.size() == 3 && std::fabs(v[1].depth - 8.0f) < 1e-6f,      "µÚ 2 ¸öÉî¶ÈÊÇ 8.0");
+        check(v.size() == 3 && v[2].right == 120,                         "µÚ 3 ¸öµÄ right ÊÇ 120");
+        check(v.size() == 3 && std::fabs(v[2].depth - 1.2f) < 1e-6f,      "µÚ 3 ¸öÉî¶ÈÊÇ 1.2");
     }
 
-    // ---- é¢˜ 2 ----
-    std::cout << "\n[é¢˜ 2] countByClass\n";
+    // ---- Ìâ 2 ----
+    std::cout << "\n[Ìâ 2] countByClass\n";
     {
         std::vector<DetResult> v = buildFrame();
-        check(countByClass(v, 0) == 2,   "2 ä¸ªè¡Œäºº");
-        check(countByClass(v, 2) == 1,   "1 è¾†æ±½è½¦");
-        check(countByClass(v, 99) == 0,  "æ²¡æœ‰çš„ç±»åˆ«è¿”å› 0");
+        check(countByClass(v, 0) == 2,   "2 ¸öĞĞÈË");
+        check(countByClass(v, 2) == 1,   "1 Á¾Æû³µ");
+        check(countByClass(v, 99) == 0,  "Ã»ÓĞµÄÀà±ğ·µ»Ø 0");
 
         std::vector<DetResult> empty;
-        check(countByClass(empty, 0) == 0, "ç©º vector è¿”å› 0");
-        check(v.size() == 3,             "åªè¯»å‡½æ•°æ²¡æ”¹åŠ¨åŸ vector");
+        check(countByClass(empty, 0) == 0, "¿Õ vector ·µ»Ø 0");
+        check(v.size() == 3,             "Ö»¶Áº¯ÊıÃ»¸Ä¶¯Ô­ vector");
     }
 
-    // ---- é¢˜ 3 ----
-    std::cout << "\n[é¢˜ 3] findNearestIndex\n";
+    // ---- Ìâ 3 ----
+    std::cout << "\n[Ìâ 3] findNearestIndex\n";
     {
         std::vector<DetResult> v = buildFrame();
-        check(findNearestIndex(v) == 2, "æœ€è¿‘çš„æ˜¯ä¸‹æ ‡ 2ï¼ˆ1.2 ç±³ï¼‰");
+        check(findNearestIndex(v) == 2, "×î½üµÄÊÇÏÂ±ê 2£¨1.2 Ã×£©");
 
         std::vector<DetResult> v2;
         v2.push_back(mkResult(0, 0.9f, 100, 200, 180, 340, -1.0f));
         v2.push_back(mkResult(0, 0.8f, 400, 210, 470, 330,  2.0f));
-        check(findNearestIndex(v2) == 1, "è·³è¿‡æœªæµ‹è·çš„ï¼Œè¿”å›ä¸‹æ ‡ 1");
+        check(findNearestIndex(v2) == 1, "Ìø¹ıÎ´²â¾àµÄ£¬·µ»ØÏÂ±ê 1");
 
         std::vector<DetResult> v3;
         v3.push_back(mkResult(0, 0.9f, 100, 200, 180, 340, -1.0f));
-        check(findNearestIndex(v3) == -1, "å…¨éƒ½æ²¡æµ‹è·ï¼Œè¿”å› -1");
+        check(findNearestIndex(v3) == -1, "È«¶¼Ã»²â¾à£¬·µ»Ø -1");
 
         std::vector<DetResult> v4;
-        check(findNearestIndex(v4) == -1, "ç©º vector è¿”å› -1");
+        check(findNearestIndex(v4) == -1, "¿Õ vector ·µ»Ø -1");
     }
 
-    // ---- é¢˜ 4 ----
-    std::cout << "\n[é¢˜ 4] clampToImage\n";
+    // ---- Ìâ 4 ----
+    std::cout << "\n[Ìâ 4] clampToImage\n";
     {
         std::vector<DetResult> v;
         v.push_back(mkResult(0, 0.9f, -20, -30, 100, 120, 3.0f));
@@ -188,43 +217,43 @@ int main() {
         v.push_back(mkResult(0, 0.7f, 100, 100, 200, 200, 1.0f));
 
         clampToImage(v, 640, 480);
-        check(v[0].left == 0,      "è´Ÿçš„ left æŠ¬åˆ° 0");
-        check(v[0].top == 0,       "è´Ÿçš„ top æŠ¬åˆ° 0");
-        check(v[0].right == 100,   "æ²¡è¶Šç•Œçš„ä¸åŠ¨");
-        check(v[1].right == 640,   "è¶…å‡ºçš„ right å‹åˆ° 640");
-        check(v[1].bottom == 480,  "è¶…å‡ºçš„ bottom å‹åˆ° 480");
-        check(v[2].left == 100 && v[2].bottom == 200, "èŒƒå›´å†…å®Œå…¨ä¸åŠ¨");
-        check(std::fabs(v[1].depth - 2.0f) < 1e-6f,  "depth ä¸è®¸è¢«æ”¹åŠ¨");
-        check(v.size() == 3,       "æ²¡æœ‰å¢åˆ å…ƒç´ ");
+        check(v[0].left == 0,      "¸ºµÄ left Ì§µ½ 0");
+        check(v[0].top == 0,       "¸ºµÄ top Ì§µ½ 0");
+        check(v[0].right == 100,   "Ã»Ô½½çµÄ²»¶¯");
+        check(v[1].right == 640,   "³¬³öµÄ right Ñ¹µ½ 640");
+        check(v[1].bottom == 480,  "³¬³öµÄ bottom Ñ¹µ½ 480");
+        check(v[2].left == 100 && v[2].bottom == 200, "·¶Î§ÄÚÍêÈ«²»¶¯");
+        check(std::fabs(v[1].depth - 2.0f) < 1e-6f,  "depth ²»Ğí±»¸Ä¶¯");
+        check(v.size() == 3,       "Ã»ÓĞÔöÉ¾ÔªËØ");
     }
 
-    // ---- é¢˜ 5 ----
-    std::cout << "\n[é¢˜ 5] removeUnmeasured\n";
+    // ---- Ìâ 5 ----
+    std::cout << "\n[Ìâ 5] removeUnmeasured\n";
     {
         std::vector<DetResult> v;
         v.push_back(mkResult(0, 0.9f, 100, 200, 180, 340,  3.5f));
-        v.push_back(mkResult(0, 0.8f, 400, 210, 470, 330, -1.0f));   // åˆ 
+        v.push_back(mkResult(0, 0.8f, 400, 210, 470, 330, -1.0f));   // É¾
         v.push_back(mkResult(2, 0.7f,  50, 300, 120, 400,  1.2f));
-        v.push_back(mkResult(0, 0.6f, 300, 220, 350, 300, -1.0f));   // åˆ 
+        v.push_back(mkResult(0, 0.6f, 300, 220, 350, 300, -1.0f));   // É¾
 
         int removed = removeUnmeasured(v);
-        check(removed == 2,        "åˆ æ‰äº† 2 ä¸ª");
-        check(v.size() == 2,       "é•¿åº¦çœŸçš„å˜å°äº†");
-        check(v[0].left == 100,    "ç¬¬ 1 ä¸ªè¿˜åœ¨åŸåœ°");
-        check(v[1].cls_id == 2,    "é¡ºåºæ²¡ä¹±ï¼Œå‰©ä¸‹çš„æ˜¯æ±½è½¦");
+        check(removed == 2,        "É¾µôÁË 2 ¸ö");
+        check(v.size() == 2,       "³¤¶ÈÕæµÄ±äĞ¡ÁË");
+        check(v[0].left == 100,    "µÚ 1 ¸ö»¹ÔÚÔ­µØ");
+        check(v[1].cls_id == 2,    "Ë³ĞòÃ»ÂÒ£¬Ê£ÏÂµÄÊÇÆû³µ");
 
         std::vector<DetResult> all;
         all.push_back(mkResult(0, 0.9f, 100, 200, 180, 340, -1.0f));
-        check(removeUnmeasured(all) == 1 && all.empty(), "å…¨åˆ å…‰ï¼Œvector å˜ç©º");
+        check(removeUnmeasured(all) == 1 && all.empty(), "È«É¾¹â£¬vector ±ä¿Õ");
 
         std::vector<DetResult> none;
-        check(removeUnmeasured(none) == 0, "ç©º vector è¿”å› 0");
+        check(removeUnmeasured(none) == 0, "¿Õ vector ·µ»Ø 0");
     }
 
     std::cout << "\n==========================================\n";
-    std::cout << "  é€šè¿‡ " << g_pass << " / å¤±è´¥ " << g_fail << "\n";
-    if (g_fail == 0) std::cout << "  å…¨ç»¿ â€”â€” vector è¿™ä¸€å…³è¿‡äº†\n";
-    std::cout << "  åˆ«å¿˜äº†çœ‹è­¦å‘Šï¼šè¿™ä¸€å…³è¦æ±‚ã€é›¶è­¦å‘Šã€‘\n";
+    std::cout << "  Í¨¹ı " << g_pass << " / Ê§°Ü " << g_fail << "\n";
+    if (g_fail == 0) std::cout << "  È«ÂÌ ¡ª¡ª vector ÕâÒ»¹Ø¹ıÁË\n";
+    std::cout << "  ±ğÍüÁË¿´¾¯¸æ£ºÕâÒ»¹ØÒªÇó¡¾Áã¾¯¸æ¡¿\n";
     std::cout << "==========================================\n";
     return 0;
 }
