@@ -13,10 +13,29 @@ C++ 学习记录 —— 为本科毕设《基于 RK 系列平台的双目视觉�
 | 10/27 | 指针与引用（交换/遍历/strlen/原地反转） | `day02_指针_盲写练习.cpp` | 25 | ✅ 25/25 |
 | 10/27 | std::string 常用操作 | `day02b_字符串补课.cpp` | 14 | ✅ 14/14 |
 | 10/28 | 结构体（初始化/`->`/三种传参/对齐） | `day03_结构体_盲写练习.cpp` | 26 | ✅ 26/26 |
-| 10/28 | 结构体数组与嵌套（对标 `yolov8.h`） | `day04_结构体数组_练习.cpp` | 31 | ✅ 31/31 |
-| 10/29 | std::vector 替代裸数组 | `day05_vector_练习.cpp` | 29 | 进行中 |
+| 10/29 | 结构体数组与嵌套（对标 `yolov8.h`） | `day04_结构体数组_练习.cpp` | 31 | ✅ 31/31 |
+| 10/29 | std::vector 替代裸数组 | `day05_vector_练习.cpp` | 29 | ✅ 29/29 |
+| 10/29 | 类与对象（上）：构造/`const`/封装 | `day06_类_盲写练习.cpp` | 36 | ✅ 36/36 |
+| 10/30–10/31 | 继承与多态：纯虚接口/动态绑定/虚析构 | `day07_继承与多态_盲写练习.cpp` | 30 | ✅ 30/30 |
 
-累计 **123 个断言通过**（day01–day04）。
+上表合计 **218 条**；加上两份引导式练习（10 + 13）共 **241 条断言全部通过**。
+
+编译状态：除 `day02b_字符串补课.cpp` 还有一条 `-Wsign-compare`（`int` 与 `npos` 比较）外，其余全部零警告。
+
+## 补充材料
+
+概念演示可以直接跑，输出就是讲解；引导式练习只留几个空，用来过渡到盲写。
+
+| 文件 | 作用 |
+|---|---|
+| `day03_结构体_概念演示.cpp` | 内存布局、对齐、三种传参的实测差异 |
+| `day05b_vector_概念演示.cpp` | vector 扩容、迭代器失效、范围 for |
+| `day05c_data与强制转换.cpp` | `.data()`、`static_cast` 与 C 风格转换的危险 |
+| `day06_类_概念演示.cpp` | 构造/析构顺序、`const` 成员函数、封装的本质 |
+| `day06_类_引导式练习.cpp` | 10 条断言，填空版 |
+| `day07_继承与多态_概念演示.cpp` | 6 节：从「不用继承」推到纯虚函数与虚析构 |
+| `day07_继承与多态_引导式练习.cpp` | 13 条断言，填空版 |
+| `day07b_多态_为什么需要.cpp` | **不写 `virtual` 会静默跑错**，加上后循环一字未改全对 |
 
 ## 目录说明
 
@@ -25,7 +44,9 @@ C++ 学习记录 —— 为本科毕设《基于 RK 系列平台的双目视觉�
 ├── dayXX_*.cpp          每日练习（含测试与断言）
 ├── docs/
 │   ├── log/             每日复盘日志
-│   └── Git入门_从装到push.md
+│   ├── 技术日志.md      每天 3 行：学了什么 / 能用在毕设 / 还没搞懂
+│   ├── Git入门_从装到push.md
+│   └── 开题报告骨架_搭建指南.md
 └── output/              编译产物（不入库）
 ```
 
@@ -38,15 +59,21 @@ g++ -std=c++17 -Wall -Wextra -Wshadow -O2 dayXX_xxx.cpp -o app.exe
 
 固定开启 `-Wall -Wextra -Wshadow`：这三个开关抓到过变量遮蔽、多字符字面量、有符号/无符号比较等真实 bug。
 
+`-std=c++17` 不是可选的：本机 g++ 8.1.0 默认是 C++14，漏掉就会报 `'clamp' is not a member of 'std'`。
+
 ## 与毕设的对应关系
 
 | 练习中的东西 | 毕设里对应的东西 |
 |---|---|
 | `DetResult`（cls_id / prop / left / top / right / bottom / depth） | `yolov8.h` 的 `object_detect_result` |
-| `DetResultList`（count + results[64]） | `object_detect_result_list` |
+| `DetResultList`（count + results[64]） | `object_detect_result_list`（上限其实是 128） |
 | `isOverlapping()` / `countNearby()` | 碰撞预警的判定逻辑 |
 | `clampToImage()` | 检测框越界裁剪 |
-| `depth` 字段 | 双目 SGBM 测距结果 |
+| `depth` 字段、`depth = -1` 表无效 | 双目 SGBM 测距结果 |
+| `class DetFrame` 收拢 5 个散函数 | 一帧检测结果的封装，外部拿不到裸 vector |
+| `class Device` 三个纯虚函数 | 摄像头 / 视频文件 / 图片序列三种输入源，统一接口 |
+| 虚析构 + 基类指针数组 | `std::vector<std::unique_ptr<Device>>` 装不同输入源，`delete` 不漏资源 |
+| 动态绑定 | 换一种输入源，只加一个类，调用处一行不改 |
 
 ## 说明
 
