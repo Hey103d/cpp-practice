@@ -2,7 +2,12 @@
 *.exe
 *.o
 *.obj
+*.a
 output/
+
+# CMake 构建目录（里面全是自动生成的，不要提交）
+build/
+build-*/
 
 # 编辑器配置
 .vscode/
